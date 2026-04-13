@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sunrise Crumble – Granola Grandé</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,400;0,600;0,700;0,800;0,900;1,700&family=Pacifico&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --sun: #FF9B21;
+    --sun-light: #FFD166;
+    --berry: #C1121F;
+    --berry-light: #F87171;
+    --oat: #8B5E3C;
+    --oat-light: #DEB887;
+    --green: #2D936C;
+    --green-light: #A8DABD;
+    --cream: #FFF8EE;
+    --honey: #F4A261;
+    --sky: #90E0EF;
+    --purple: #9B5DE5;
+    --pink: #F15BB5;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Quicksand', sans-serif;
+    background: var(--cream);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ─── FLOATING DECORATIVE SHAPES ─── */
+  .floating-bg {
+    position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden;
+  }
+  .blob {
+    position: absolute; border-radius: 50%; opacity: 0.12;
+    animation: float 8s ease-in-out infinite;
+  }
+  .blob:nth-child(1) { width: 300px; height: 300px; background: var(--sun); top: -100px; left: -80px; animation-delay: 0s; }
+  .blob:nth-child(2) { width: 200px; height: 200px; background: var(--berry); top: 30%; right: -60px; animation-delay: 2s; }
+  .blob:nth-child(3) { width: 250px; height: 250px; background: var(--green); bottom: 10%; left: 10%; animation-delay: 4s; }
+  .blob:nth-child(4) { width: 150px; height: 150px; background: var(--purple); top: 60%; right: 20%; animation-delay: 1s; }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0) scale(1); }
+    50% { transform: translateY(-20px) scale(1.05); }
+  }
+
+  /* ─── HERO HEADER ─── */
+  .hero {
+    position: relative; z-index: 1;
+    background: linear-gradient(135deg, #8B1A1A 0%, #C1121F 40%, #FF6B35 100%);
+    padding: 40px 20px 80px;
+    text-align: center;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; bottom: -1px; left: 0; right: 0;
+    height: 60px;
+    background: var(--cream);
+    clip-path: ellipse(55% 100% at 50% 100%);
+  }
+  .hero-dots {
+    position: absolute; inset: 0;
+    background-image: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
+
+  .sun-badge {
+    display: inline-block;
+    background: white;
+    border-radius: 16px;
+    padding: 10px 18px;
+    margin-bottom: 20px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+    animation: pop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  }
+  .sun-badge img, .sun-badge .logo-text {
+    display: flex; align-items: center; gap: 8px;
+  }
+  .sun-badge .brand { font-family: 'Pacifico', cursive; font-size: 18px; color: var(--berry); }
+  .sun-badge .sub { font-size: 10px; color: #888; letter-spacing: 1px; text-transform: uppercase; }
+
+  @keyframes pop {
+    from { transform: scale(0.5); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+  }
+
+  .hero h1 {
+    font-family: 'Pacifico', cursive;
+    font-size: clamp(36px, 8vw, 58px);
+    color: white;
+    line-height: 1.15;
+    margin-bottom: 8px;
+    text-shadow: 0 4px 16px rgba(0,0,0,0.3);
+    animation: slideUp 0.7s ease both 0.2s;
+  }
+  .hero h1 span { color: var(--sun-light); }
+
+  .hero .tagline {
+    font-size: 15px; color: rgba(255,255,255,0.85); margin-bottom: 24px;
+    font-weight: 600; letter-spacing: 0.5px;
+    animation: slideUp 0.7s ease both 0.35s;
+  }
+
+  @keyframes slideUp {
+    from { transform: translateY(30px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+
+  .hero-chips {
+    display: flex; flex-wrap: wrap; gap: 8px; justify-content: center;
+    animation: slideUp 0.7s ease both 0.5s;
+  }
+  .chip {
+    background: rgba(255,255,255,0.2);
+    border: 1px solid rgba(255,255,255,0.35);
+    border-radius: 30px; padding: 6px 14px;
+    font-size: 12px; color: white; font-weight: 700;
+    backdrop-filter: blur(8px);
+  }
+
+  /* ─── CONTENT ─── */
+  .content {
+    position: relative; z-index: 1;
+    max-width: 520px; margin: 0 auto;
+    padding: 20px 16px 60px;
+  }
+
+  /* SECTION */
+  .section {
+    margin-bottom: 28px;
+    animation: fadeIn 0.6s ease both;
+  }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+
+  .section-label {
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 14px;
+  }
+  .section-label .icon-wrap {
+    width: 38px; height: 38px; border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; flex-shrink: 0;
+  }
+  .section-label h2 {
+    font-family: 'Nunito', sans-serif;
+    font-size: 18px; font-weight: 900; color: #2a1500;
+  }
+
+  /* CARD */
+  .card {
+    background: white;
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 4px 24px rgba(100,40,0,0.1);
+    border: 2px solid transparent;
+  }
+  .card.border-sun { border-color: #FFD166; }
+  .card.border-berry { border-color: #F87171; }
+  .card.border-green { border-color: #A8DABD; }
+  .card.border-sky { border-color: #90E0EF; }
+  .card.border-purple { border-color: #C8A2FF; }
+  .card.border-honey { border-color: #F4A261; }
+
+  /* NUTRITION GRID */
+  .nutr-grid {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px;
+  }
+  .nutr-item {
+    border-radius: 14px; padding: 14px 10px; text-align: center;
+  }
+  .nutr-item .big {
+    font-family: 'Nunito', sans-serif;
+    font-size: 28px; font-weight: 900; line-height: 1;
+  }
+  .nutr-item .small {
+    font-size: 11px; font-weight: 700; letter-spacing: 0.5px;
+    text-transform: uppercase; margin-top: 4px; opacity: 0.8;
+  }
+  .n-cal { background: #FFF3E0; } .n-cal .big { color: #E65100; } .n-cal .small { color: #BF360C; }
+  .n-fat { background: #FFF8E1; } .n-fat .big { color: #F57F17; } .n-fat .small { color: #E65100; }
+  .n-carb { background: #F3E5F5; } .n-carb .big { color: #7B1FA2; } .n-carb .small { color: #6A1B9A; }
+  .n-fiber { background: #E8F5E9; } .n-fiber .big { color: #2E7D32; } .n-fiber .small { color: #1B5E20; }
+  .n-sugar { background: #FCE4EC; } .n-sugar .big { color: #C62828; } .n-sugar .small { color: #880E4F; }
+  .n-prot { background: #E3F2FD; } .n-prot .big { color: #1565C0; } .n-prot .small { color: #0D47A1; }
+  .n-sod { background: #FBE9E7; } .n-sod .big { color: #BF360C; } .n-sod .small { color: #870000; }
+  .n-serv { background: #F1F8E9; } .n-serv .big { color: #558B2F; } .n-serv .small { color: #33691E; }
+
+  .nutr-note {
+    font-size: 11px; color: #999; margin-top: 12px; text-align: center; line-height: 1.5;
+  }
+
+  /* INGREDIENT PILLS */
+  .ingredient-pills {
+    display: flex; flex-wrap: wrap; gap: 8px;
+  }
+  .pill {
+    border-radius: 30px; padding: 8px 16px;
+    font-size: 13px; font-weight: 700;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .p-oat { background: #FFF3E0; color: #E65100; }
+  .p-honey { background: #FFF8E1; color: #F57F17; }
+  .p-almond { background: #F3E5F5; color: #6A1B9A; }
+  .p-cran { background: #FCE4EC; color: #880E4F; }
+  .p-oil { background: #E8F5E9; color: #2E7D32; }
+  .p-brown { background: #FBE9E7; color: #BF360C; }
+  .p-vanilla { background: #E3F2FD; color: #1565C0; }
+  .p-salt { background: #ECEFF1; color: #37474F; }
+
+  /* ALLERGEN BOX */
+  .allergen-box {
+    background: #FFF3E0;
+    border-radius: 14px; padding: 14px 16px;
+    border-left: 5px solid #FF9800;
+    margin-top: 12px;
+  }
+  .allergen-box h4 {
+    font-size: 12px; font-weight: 900; color: #E65100;
+    text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px;
+  }
+  .allergen-box p { font-size: 13px; color: #5D4037; line-height: 1.5; }
+
+  /* POUCH INFO */
+  .pouch-features {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+  }
+  .pouch-feat {
+    border-radius: 14px; padding: 14px 12px;
+    text-align: center;
+  }
+  .pouch-feat .feat-emoji { font-size: 28px; margin-bottom: 6px; display: block; }
+  .pouch-feat .feat-name { font-size: 12px; font-weight: 800; color: #2a1500; margin-bottom: 3px; }
+  .pouch-feat .feat-desc { font-size: 10.5px; color: #6a4030; line-height: 1.4; }
+
+  .pf-1 { background: #E8F5E9; }
+  .pf-2 { background: #E3F2FD; }
+  .pf-3 { background: #FFF8E1; }
+  .pf-4 { background: #FCE4EC; }
+
+  .storage-tip {
+    background: linear-gradient(135deg, #E8F5E9, #F1F8E9);
+    border-radius: 14px; padding: 14px 16px; margin-top: 12px;
+    border-left: 5px solid var(--green);
+  }
+  .storage-tip h4 { font-size: 12px; font-weight: 900; color: var(--green); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; }
+  .storage-tip p { font-size: 13px; color: #2a4030; line-height: 1.5; }
+
+  /* BRAND INFO */
+  .brand-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+  }
+  .brand-item {
+    background: #f9f5ee; border-radius: 14px; padding: 12px;
+    text-align: center;
+  }
+  .brand-item .bi-label { font-size: 10px; color: #a07040; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; }
+  .brand-item .bi-val { font-size: 12.5px; font-weight: 700; color: #2a1500; line-height: 1.4; }
+
+  /* FOOTER */
+  .footer {
+    position: relative; z-index: 1;
+    background: linear-gradient(135deg, #8B1A1A, #C1121F);
+    padding: 32px 20px;
+    text-align: center;
+    color: white;
+  }
+  .footer h3 { font-family: 'Pacifico', cursive; font-size: 22px; margin-bottom: 6px; }
+  .footer p { font-size: 13px; opacity: 0.8; }
+  .footer .heart { color: var(--sun-light); font-size: 20px; margin: 10px 0 4px; display: block; }
+
+  /* STICKY NAV DOTS */
+  .nav-dots {
+    position: fixed; right: 14px; top: 50%; transform: translateY(-50%);
+    display: flex; flex-direction: column; gap: 8px; z-index: 100;
+  }
+  .dot {
+    width: 10px; height: 10px; border-radius: 50%;
+    background: rgba(139,26,26,0.25); cursor: pointer;
+    transition: all 0.3s;
+  }
+  .dot.active { background: var(--berry); transform: scale(1.4); }
+
+  /* SCROLL ANIMATION DELAYS */
+  .section:nth-child(1) { animation-delay: 0.1s; }
+  .section:nth-child(2) { animation-delay: 0.2s; }
+  .section:nth-child(3) { animation-delay: 0.3s; }
+  .section:nth-child(4) { animation-delay: 0.4s; }
+  .section:nth-child(5) { animation-delay: 0.5s; }
+  .section:nth-child(6) { animation-delay: 0.6s; }
+
+  /* SPARKLE CSS STARS */
+  .sparkles { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+  .sparkle {
+    position: absolute; width: 6px; height: 6px; border-radius: 50%;
+    background: rgba(255,220,100,0.6);
+    animation: twinkle 3s ease-in-out infinite;
+  }
+  @keyframes twinkle {
+    0%, 100% { opacity: 0; transform: scale(0); }
+    50% { opacity: 1; transform: scale(1); }
+  }
+</style>
+</head>
+<body>
+
+<div class="floating-bg">
+  <div class="blob"></div>
+  <div class="blob"></div>
+  <div class="blob"></div>
+  <div class="blob"></div>
+</div>
+
+<!-- ─── HERO ─── -->
+<div class="hero" id="top">
+  <div class="hero-dots"></div>
+  <div class="sparkles" id="sparkles"></div>
+
+  <div class="sun-badge">
+    <div class="logo-text">
+      <span style="font-size:22px;">☀️</span>
+      <div>
+        <div class="brand">Sunrise Crumble</div>
+        <div class="sub">Philippines</div>
+      </div>
+    </div>
+  </div>
+
+  <h1>Granola <span>Grandé</span> 🌾</h1>
+  <div class="tagline">Slow-toasted · Naturally sweetened · Wholesome goodness</div>
+
+  <div class="hero-chips">
+    <div class="chip">🌿 High in Fiber</div>
+    <div class="chip">🚫 No Added Sugar</div>
+    <div class="chip">💛 220 cal/serving</div>
+    <div class="chip">♥ No Cholesterol</div>
+    <div class="chip">🇵🇭 Made in PH</div>
+  </div>
+</div>
+
+<!-- NAV DOTS -->
+<div class="nav-dots" id="navDots">
+  <div class="dot active" onclick="scrollToSection(0)"></div>
+  <div class="dot" onclick="scrollToSection(1)"></div>
+  <div class="dot" onclick="scrollToSection(2)"></div>
+  <div class="dot" onclick="scrollToSection(3)"></div>
+  <div class="dot" onclick="scrollToSection(4)"></div>
+  <div class="dot" onclick="scrollToSection(5)"></div>
+</div>
+
+<!-- ─── CONTENT ─── -->
+<div class="content">
+
+  <!-- 1. ABOUT -->
+  <div class="section" id="s0">
+    <div class="section-label">
+      <div class="icon-wrap" style="background:#FFF3E0;">🌅</div>
+      <h2>About the Product</h2>
+    </div>
+    <div class="card border-sun">
+      <p style="font-size:14px;color:#3a2010;line-height:1.8;font-weight:600;">
+        Granola Grandé is a <span style="color:var(--berry);font-weight:800;">slow-toasted, gently sweetened</span> granola 
+        crafted with simple, wholesome ingredients and a homemade feel. It's the perfect companion for 
+        quiet mornings, cozy moments, and <span style="color:var(--green);font-weight:800;">mindful eating</span> — 
+        bringing warmth and comfort in every golden crunch. 🌾✨
+      </p>
+      <div style="display:flex;gap:10px;margin-top:14px;flex-wrap:wrap;">
+        <div style="background:#FFF8E1;border-radius:12px;padding:8px 12px;flex:1;text-align:center;min-width:90px;">
+          <div style="font-size:20px;">📦</div>
+          <div style="font-size:11px;font-weight:800;color:#7a4a00;">Net Wt.</div>
+          <div style="font-size:15px;font-weight:900;color:#E65100;">50g</div>
+        </div>
+        <div style="background:#FFF3E0;border-radius:12px;padding:8px 12px;flex:1;text-align:center;min-width:90px;">
+          <div style="font-size:20px;">🥣</div>
+          <div style="font-size:11px;font-weight:800;color:#7a4a00;">Serving Size</div>
+          <div style="font-size:15px;font-weight:900;color:#E65100;">½ Cup</div>
+        </div>
+        <div style="background:#E8F5E9;border-radius:12px;padding:8px 12px;flex:1;text-align:center;min-width:90px;">
+          <div style="font-size:20px;">🔢</div>
+          <div style="font-size:11px;font-weight:800;color:#2a6030;">Servings</div>
+          <div style="font-size:15px;font-weight:900;color:var(--green);">6 per bag</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. NUTRITION -->
+  <div class="section" id="s1">
+    <div class="section-label">
+      <div class="icon-wrap" style="background:#E3F2FD;">📊</div>
+      <h2>Nutrition Facts</h2>
+    </div>
+    <div class="card border-sky">
+      <div style="text-align:center;margin-bottom:14px;">
+        <span style="font-size:11px;color:#888;font-weight:700;text-transform:uppercase;letter-spacing:1px;">Per Serving (½ Cup / 50g)</span>
+      </div>
+      <div class="nutr-grid">
+        <div class="nutr-item n-cal"><div class="big">220</div><div class="small">Calories</div></div>
+        <div class="nutr-item n-prot"><div class="big">5g</div><div class="small">Protein</div></div>
+        <div class="nutr-item n-fat"><div class="big">8g</div><div class="small">Total Fat</div></div>
+        <div class="nutr-item n-fiber"><div class="big">4g</div><div class="small">Dietary Fiber</div></div>
+        <div class="nutr-item n-carb"><div class="big">36g</div><div class="small">Total Carbs</div></div>
+        <div class="nutr-item n-sugar"><div class="big">14g</div><div class="small">Total Sugars</div></div>
+        <div class="nutr-item n-sod"><div class="big">140mg</div><div class="small">Sodium</div></div>
+        <div class="nutr-item n-serv" style="grid-column:2;"><div class="big">0mg</div><div class="small">Cholesterol</div></div>
+      </div>
+      <p class="nutr-note">*Percent Daily Values based on a 2,000 calorie diet. Your daily values may be higher or lower depending on your calorie needs.</p>
+    </div>
+  </div>
+
+  <!-- 3. INGREDIENTS -->
+  <div class="section" id="s2">
+    <div class="section-label">
+      <div class="icon-wrap" style="background:#F3E5F5;">🧺</div>
+      <h2>Ingredients</h2>
+    </div>
+    <div class="card border-purple">
+      <div class="ingredient-pills">
+        <div class="pill p-oat">🌾 Rolled Oats</div>
+        <div class="pill p-honey">🍯 Honey</div>
+        <div class="pill p-almond">🌰 Almonds</div>
+        <div class="pill p-cran">🍒 Cranberries</div>
+        <div class="pill p-oil">🌻 Sunflower Oil</div>
+        <div class="pill p-brown">🍂 Brown Sugar</div>
+        <div class="pill p-vanilla">🌸 Vanilla Extract</div>
+        <div class="pill p-salt">🧂 Sea Salt</div>
+      </div>
+      <div class="allergen-box">
+        <h4>⚠️ Allergen Information</h4>
+        <p><strong>Contains:</strong> Almonds, Tree Nuts<br>
+        <strong>May contain traces of:</strong> Peanuts, Sesame, Soy</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. PACKAGING -->
+  <div class="section" id="s3">
+    <div class="section-label">
+      <div class="icon-wrap" style="background:#E8F5E9;">♻️</div>
+      <h2>Sustainable Retort Pouch</h2>
+    </div>
+    <div class="card border-green">
+      <p style="font-size:13px;color:#3a5030;line-height:1.7;font-weight:600;margin-bottom:14px;">
+        Our <span style="color:var(--green);font-weight:800;">eco-conscious retort pouch</span> is more than just packaging — 
+        it's a commitment to freshness, safety, and the planet. 🌍💚
+      </p>
+      <div class="pouch-features">
+        <div class="pouch-feat pf-1">
+          <span class="feat-emoji">🔒</span>
+          <div class="feat-name">Hermetically Sealed</div>
+          <div class="feat-desc">Airtight seal locks in freshness and crunch from day one.</div>
+        </div>
+        <div class="pouch-feat pf-2">
+          <span class="feat-emoji">🔁</span>
+          <div class="feat-name">Resealable Zip</div>
+          <div class="feat-desc">Close it back up after opening to maintain optimal freshness.</div>
+        </div>
+        <div class="pouch-feat pf-3">
+          <span class="feat-emoji">🌡️</span>
+          <div class="feat-name">Heat-Resistant</div>
+          <div class="feat-desc">Retort-grade material safe for food storage in warm climates.</div>
+        </div>
+        <div class="pouch-feat pf-4">
+          <span class="feat-emoji">🌱</span>
+          <div class="feat-name">Eco-Friendly Design</div>
+          <div class="feat-desc">Reduced plastic footprint compared to traditional rigid packaging.</div>
+        </div>
+      </div>
+      <div class="storage-tip">
+        <h4>🌿 Storage Instructions</h4>
+        <p>Keep in a cool, dry place. Once opened, seal the package tightly. <strong>Best consumed within 4 weeks of opening.</strong></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. WHY CHOOSE US -->
+  <div class="section" id="s4">
+    <div class="section-label">
+      <div class="icon-wrap" style="background:#FCE4EC;">💖</div>
+      <h2>Why You'll Love It</h2>
+    </div>
+    <div class="card border-berry">
+      <div style="display:flex;flex-direction:column;gap:12px;">
+        <div style="display:flex;align-items:flex-start;gap:12px;background:#FFF0F0;border-radius:14px;padding:12px;">
+          <span style="font-size:26px;">🌾</span>
+          <div>
+            <div style="font-size:14px;font-weight:800;color:#8B1A1A;margin-bottom:2px;">Wholesome & Simple</div>
+            <div style="font-size:12px;color:#5a2020;line-height:1.5;">No artificial flavors, preservatives, or unnecessary additives — just real food.</div>
+          </div>
+        </div>
+        <div style="display:flex;align-items:flex-start;gap:12px;background:#F0FFF4;border-radius:14px;padding:12px;">
+          <span style="font-size:26px;">💪</span>
+          <div>
+            <div style="font-size:14px;font-weight:800;color:var(--green);margin-bottom:2px;">High in Fiber</div>
+            <div style="font-size:12px;color:#2a4030;line-height:1.5;">4g of dietary fiber per serving supports healthy digestion and keeps you full longer.</div>
+          </div>
+        </div>
+        <div style="display:flex;align-items:flex-start;gap:12px;background:#FFF8E1;border-radius:14px;padding:12px;">
+          <span style="font-size:26px;">🍯</span>
+          <div>
+            <div style="font-size:14px;font-weight:800;color:#E65100;margin-bottom:2px;">Naturally Sweetened</div>
+            <div style="font-size:12px;color:#5a3010;line-height:1.5;">Sweetened with real honey and brown sugar — satisfyingly sweet without going overboard.</div>
+          </div>
+        </div>
+        <div style="display:flex;align-items:flex-start;gap:12px;background:#F3E5F5;border-radius:14px;padding:12px;">
+          <span style="font-size:26px;">🥣</span>
+          <div>
+            <div style="font-size:14px;font-weight:800;color:var(--purple);margin-bottom:2px;">Versatile & Delicious</div>
+            <div style="font-size:12px;color:#3a1050;line-height:1.5;">Enjoy with milk, yogurt, or straight from the bag — perfect anytime snack!</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 6. BRAND INFO -->
+  <div class="section" id="s5">
+    <div class="section-label">
+      <div class="icon-wrap" style="background:#FFF8E1;">🏢</div>
+      <h2>About the Brand</h2>
+    </div>
+    <div class="card border-honey">
+      <div style="text-align:center;margin-bottom:16px;padding-bottom:14px;border-bottom:2px dashed #FFE082;">
+        <div style="font-family:'Pacifico',cursive;font-size:24px;color:var(--berry);margin-bottom:4px;">Sunrise Crumble</div>
+        <div style="font-size:12px;color:#888;letter-spacing:1px;text-transform:uppercase;">Manufacturing Philippines Corp.</div>
+      </div>
+      <div class="brand-grid">
+        <div class="brand-item">
+          <div class="bi-label">📍 Location</div>
+          <div class="bi-val">Bulacan, Philippines</div>
+        </div>
+        <div class="brand-item">
+          <div class="bi-label">📅 Best Before</div>
+          <div class="bi-val">24 October 2026</div>
+        </div>
+        <div class="brand-item">
+          <div class="bi-label">⚖️ Net Weight</div>
+          <div class="bi-val">1.76 oz · 50g</div>
+        </div>
+        <div class="brand-item">
+          <div class="bi-label">🔢 Servings</div>
+          <div class="bi-val">6 per container</div>
+        </div>
+      </div>
+      <div style="margin-top:14px;text-align:center;background:linear-gradient(135deg,#FFF3E0,#FFF8E1);border-radius:14px;padding:14px;">
+        <div style="font-size:13px;font-style:italic;color:#5a3010;font-weight:600;line-height:1.6;">
+          "Good food starts with good grains" 🌾<br>
+          <span style="font-size:11px;color:#a07040;">— Sunrise Crumble</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- end .content -->
+
+<!-- FOOTER -->
+<div class="footer">
+  <h3>☀️ Start Your Morning Right!</h3>
+  <span class="heart">💛</span>
+  <p>Thank you for choosing Sunrise Crumble Granola Grandé</p>
+  <p style="margin-top:6px;font-size:11px;opacity:0.6;">Scan this page · Share the goodness · Live wholesomely</p>
+</div>
+
+<script>
+const sections = ['s0','s1','s2','s3','s4','s5'];
+const dots = document.querySelectorAll('.dot');
+
+function scrollToSection(i) {
+  document.getElementById(sections[i])?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+window.addEventListener('scroll', () => {
+  let current = 0;
+  sections.forEach((id, i) => {
+    const el = document.getElementById(id);
+    if (el && el.getBoundingClientRect().top < window.innerHeight * 0.5) current = i;
+  });
+  dots.forEach((d, i) => d.classList.toggle('active', i === current));
+});
+
+// Generate sparkles
+const sparkleContainer = document.getElementById('sparkles');
+for (let i = 0; i < 20; i++) {
+  const s = document.createElement('div');
+  s.className = 'sparkle';
+  s.style.cssText = `
+    left: ${Math.random()*100}%;
+    top: ${Math.random()*100}%;
+    animation-delay: ${Math.random()*3}s;
+    animation-duration: ${2 + Math.random()*2}s;
+    width: ${4 + Math.random()*6}px;
+    height: ${4 + Math.random()*6}px;
+  `;
+  sparkleContainer.appendChild(s);
+}
+</script>
+</body>
+</html>
